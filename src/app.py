@@ -21,101 +21,61 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 
 # In-memory activity database
 activities = {
-    "Chess Club": {
-        "description": "Learn strategies and compete in chess tournaments",
-        "schedule": "Fridays, 3:30 PM - 5:00 PM",
-        "max_participants": 12,
-        "participants": ["michael@mergington.edu", "daniel@mergington.edu"]
-    },
-    "Programming Class": {
-        "description": "Learn programming fundamentals and build software projects",
-        "schedule": "Tuesdays and Thursdays, 3:30 PM - 4:30 PM",
-        "max_participants": 20,
-        "participants": ["emma@mergington.edu", "sophia@mergington.edu"]
-    },
-    "Gym Class": {
-        "description": "Physical education and sports activities",
-        "schedule": "Mondays, Wednesdays, Fridays, 2:00 PM - 3:00 PM",
-        "max_participants": 30,
-        "participants": ["john@mergington.edu", "olivia@mergington.edu"]
-    },
-    "Soccer Team": {
-        "description": "Join the soccer team and compete in local tournaments",
-        "schedule": "Tuesdays and Thursdays, 4:00 PM - 6:00 PM",
-        "max_participants": 22,
-        "participants": []
-    },
-    "Basketball Team": {
-        "description": "Practice basketball and participate in inter-school competitions",
-        "schedule": "Wednesdays and Fridays, 3:00 PM - 5:00 PM",
-        "max_participants": 15,
-        "participants": []
-    },
-    "Art Club": {
-        "description": "Explore your creativity through painting, drawing, and sculpture",
-        "schedule": "Mondays, 3:30 PM - 5:00 PM",
-        "max_participants": 15,
-        "participants": []
-    },
-    "Drama Club": {
-        "description": "Participate in plays and improve your acting skills",
-        "schedule": "Thursdays, 4:00 PM - 5:30 PM",
-        "max_participants": 20,
-        "participants": []
-    },
-    "Math Club": {
-        "description": "Solve challenging math problems and prepare for math competitions",
-        "schedule": "Tuesdays, 3:30 PM - 4:30 PM",
-        "max_participants": 10,
-        "participants": []
-    },
-    "Science Club": {
-        "description": "Conduct experiments and explore scientific concepts",
-        "schedule": "Fridays, 4:00 PM - 5:30 PM",
-        "max_participants": 12,
-        "participants": []
-    },
-    # New sports activities
-    "Tennis Club": {
-        "description": "Learn and practice tennis techniques and compete in matches",
-        "schedule": "Wednesdays, 4:00 PM - 5:30 PM",
-        "max_participants": 10,
-        "participants": []
-    },
-    "Swimming Team": {
-        "description": "Train in swimming and participate in competitions",
-        "schedule": "Mondays and Thursdays, 3:00 PM - 4:30 PM",
-        "max_participants": 15,
-        "participants": []
-    },
-    # New artistic activities
-    "Photography Club": {
-        "description": "Learn photography skills and participate in photo exhibitions",
-        "schedule": "Tuesdays, 4:00 PM - 5:30 PM",
-        "max_participants": 12,
-        "participants": []
-    },
-    "Music Band": {
-        "description": "Join the school band and practice playing musical instruments",
-        "schedule": "Fridays, 3:30 PM - 5:00 PM",
-        "max_participants": 20,
-        "participants": []
-    },
-    # New intellectual activities
-    "Debate Club": {
-        "description": "Improve public speaking and debate skills",
-        "schedule": "Thursdays, 3:30 PM - 5:00 PM",
-        "max_participants": 15,
-        "participants": []
-    },
-    "Robotics Club": {
-        "description": "Build robots and participate in robotics competitions",
-        "schedule": "Wednesdays, 3:30 PM - 5:30 PM",
-        "max_participants": 10,
-        "participants": []
-    }
+   "Chess Club": {
+      "description": "Learn strategies and compete in chess tournaments",
+      "schedule": "Fridays, 3:30 PM - 5:00 PM",
+      "max_participants": 12,
+      "participants": ["michael@mergington.edu", "daniel@mergington.edu"]
+   },
+   "Programming Class": {
+      "description": "Learn programming fundamentals and build software projects",
+      "schedule": "Tuesdays and Thursdays, 3:30 PM - 4:30 PM",
+      "max_participants": 20,
+      "participants": ["emma@mergington.edu", "sophia@mergington.edu"]
+   },
+   "Gym Class": {
+      "description": "Physical education and sports activities",
+      "schedule": "Mondays, Wednesdays, Fridays, 2:00 PM - 3:00 PM",
+      "max_participants": 30,
+      "participants": ["john@mergington.edu", "olivia@mergington.edu"]
+   },
+   "Basketball Team": {
+      "description": "Competitive basketball training and games",
+      "schedule": "Tuesdays and Thursdays, 4:00 PM - 6:00 PM",
+      "max_participants": 15,
+      "participants": []
+   },
+   "Swimming Club": {
+      "description": "Swimming training and water sports",
+      "schedule": "Mondays and Wednesdays, 3:30 PM - 5:00 PM",
+      "max_participants": 20,
+      "participants": []
+   },
+   "Art Studio": {
+      "description": "Express creativity through painting and drawing",
+      "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+      "max_participants": 15,
+      "participants": []
+   },
+   "Drama Club": {
+      "description": "Theater arts and performance training",
+      "schedule": "Tuesdays, 4:00 PM - 6:00 PM",
+      "max_participants": 25,
+      "participants": []
+   },
+   "Debate Team": {
+      "description": "Learn public speaking and argumentation skills",
+      "schedule": "Thursdays, 3:30 PM - 5:00 PM",
+      "max_participants": 16,
+      "participants": []
+   },
+   "Science Club": {
+      "description": "Hands-on experiments and scientific exploration",
+      "schedule": "Fridays, 3:30 PM - 5:00 PM",
+      "max_participants": 20,
+      "participants": []
+   }
 }
-
 
 @app.get("/")
 def root():
@@ -129,18 +89,18 @@ def get_activities():
 
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
-    """Sign up a student for an activity"""
-    # Validate activity exists
-    if activity_name not in activities:
-        raise HTTPException(status_code=404, detail="Activity not found")
+   """Sign up a student for an activity"""
+   # Validate activity exists
+   if activity_name not in activities:
+      raise HTTPException(status_code=404, detail="Activity not found")
 
-    # Get the specific activity
-    activity = activities[activity_name]
+   # Get the activity
+   activity = activities[activity_name]
 
-    # Check if the student is already signed up
-    if email in activity["participants"]:
-        raise HTTPException(status_code=400, detail="Student is already signed up for this activity")
+   # Validate student is not already signed up
+   if email in activity["participants"]:
+     raise HTTPException(status_code=400, detail="Student is already signed up")
 
-    # Add student
-    activity["participants"].append(email)  
-    return {"message": f"Signed up {email} for {activity_name}"}
+   # Add student
+   activity["participants"].append(email)
+   return {"message": f"Signed up {email} for {activity_name}"}
